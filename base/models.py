@@ -39,6 +39,7 @@ class Course(models.Model):
 
 
 class SessionID(models.Model):
+    """this is to identify questions taken at a particular time."""
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time_taken = models.DateTimeField(auto_now_add=True)
