@@ -1,4 +1,12 @@
 {% extends 'base.html' %} {% block content %}
-<h1>Welcome</h1>
-
+<div>
+  <h1>Welcome</h1>
+  <h2>
+    this is quiztrivia where you can take practice questions to help you prepare
+    for your examinations.
+  </h2>
+  <button><a href="{% url 'register' %}">Sign up</a></button>
+  <br /><br />
+  <p>Already signed up yet? <a href="{% url 'login' %}">login</a></p>
+</div>
 {% endblock content %}
