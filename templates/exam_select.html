@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block content %}
+
+<form action="{% url 'exam_select' %}" method="get">
+  <label>
+    <title>Search</title>
+    <input name="q" placeholder="search for quizzes" />
+  </label>
+</form>
+<div>
+  <h2>Available Quizzes</h2>
+  <table>
+    <tr>
+      <th>Course Code</th>
+      <th>Course Title</th>
+      <th>Total NO of Questions</th>
+    </tr>
+    <tr>
+      <td>seng 102</td>
+      <td>Intro to web dev</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <td>seng 204</td>
+      <td>software security essentials</td>
+      <td>20</td>
+    </tr>
+    {% for course in courses %}
+    <tr>
+      <td>{{course.course_code}}</td>
+      {{course.course_title}}
+      <td></td>
+      {{course.num_of_questions}}
+      <td></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br /><br /><br /><br />
+  <p>submit your own quiz <a href="{% url 'new_quiz' %}">here</a></p>
+</div>
+{% endblock content %}

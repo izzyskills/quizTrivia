@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    """this is contains addtional info that is not in the User Model"""
+    """this is contains additional info that is not in the User Model"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField(
         upload_to='profile_pic/Student/', null=True, blank=True)
@@ -30,7 +30,7 @@ class Course(models.Model):
     course_code = models.CharField(max_length=10)
     num_of_question = models.PositiveIntegerField()
     questions = models.FileField(upload_to='questions/', max_length=100)
-    # to seprate and know who made a quiz.
+    # to separate and know who made a quiz.
     uploaded_by = models.ForeignKey(
         Profile, on_delete=models.SET("deleted user"))
 

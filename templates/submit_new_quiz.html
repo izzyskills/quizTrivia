@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %} {% if error %}
+<p>{{error}}</p>
+{% endif %}
+<h3>Submit your own quiz for others</h3>
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %} {{courseForm.as_p}}
+  <button type="submit">Submit</button>
+</form>
+
+<h5>Guidelines</h5>
+<ul>
+  <li>make sure it's a csv file</li>
+  <li>
+    the column should follow something like this
+    <table>
+      <tr>
+        <th>question</th>
+        <th>optionA</th>
+        <th>optionB</th>
+        <th>optionC</th>
+        <th>optionD</th>
+        <th>answer</th>
+      </tr>
+      <tr>
+        <td>What is HTML?</td>
+        <td>HTML describes the structure of a webpage</td>
+        <td>
+          HTML is the standard markup language mainly used to create web pages
+        </td>
+        <td>
+          HTML consists of a set of elements that helps the browser how to view
+          the content
+        </td>
+        <td>All of the mentioned</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>What is DOM in HTML?</td>
+        <td>Language dependent application programming</td>
+        <td>Hierarchy of objects in ASPNET</td>
+        <td>Application programming interface</td>
+        <td>HyperText Markup Language</td>
+        <td>3</td>
+      </tr>
+    </table>
+  </li>
+  <li>make sure the answers are correct</li>
+</ul>
+
+{% endblock content %}
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  <label for="course_code">Course Code</label>
+  <input name="course_code" type="text" /><br />
+  <label for="course_code">Course Title</label>
+  <input name="course_code" type="text" /><br />
+  <label for="num_of_question">No. of questions</label>
+  <input name="num_of_question" type="text" /><br />
+  <label for="questions">Questions</label>
+  <input type="file" name="questions" id="" />
+
+  <button type="submit">Submit</button>
+</form>

@@ -15,3 +15,10 @@ class ProfileCreationForm(ModelForm):
     class Meta:
         model = models.Profile
         fields = ['address', 'mobile', 'profile_pic']
+
+class CourseCreationForm(ModelForm):
+
+    class Meta:
+        model = models.Course
+        fields = '__all__'
+        exclude = ['uploaded_by']  

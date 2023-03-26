@@ -1,16 +1,16 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div>
-    <img src="" alt="">
-    <h2>{{user.username}} profile</h2>
-    <br><br>
-    <h4>Previous scores</h4>
-    <br><br><br>
-    <h4>Retake quizes</h4>
-    <br><br><br>
+  <img src="" alt="" />
+  <h2>{{user.username}} profile</h2>
+  <br /><br />
+  <h4>Previous scores</h4>
+  <br /><br /><br />
+  <h4>Retake quizes</h4>
+  <br /><br /><br />
 
-    <button disabled="disabled"><a href="">take quiz</a></button>
-    <button disabled="disabled"><a href="">former quizes</a></button>
-
+  <button>
+    <a href="{% url 'exam_select' %}">take quiz</a>
+  </button>
+  <button><a href="">former quizes</a></button>
 </div>
 {% endblock content %}
