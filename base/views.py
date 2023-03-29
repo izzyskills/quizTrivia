@@ -56,7 +56,7 @@ def dashboard_view(request):
 
 
 @login_required(login_url='login')
-def select_exam_view(request):
+def select_quiz_view(request):
     q = request.GET.get("q") if request.GET.get('q') != None else ''
 
     courses = models.Course.objects.filter(
@@ -65,7 +65,23 @@ def select_exam_view(request):
     )
 
     context = {'courses': courses}
-    return render(request, 'exam_select.html', context)
+    return render(request, 'quiz_select.html', context)
+
+def pre_quiz_view(request,pk):
+    course = models.Course.objects.get(id=pk)
+    if request == 'POST':
+        time =int( request.POST.get("timer"))
+        num_question = request.POST.get("num_of_questions")
+        session_id = models.SessionID.objects.create(
+            course = course,profile= models.Profile.objects.get(user=request.user)
+        )
+        required_info = {'timer':time,'num_question':num_question,'session_id':session_id}
+        return quiz_view(request,pk,required_info)
+    return render(request,'pre_quiz.html',{"course":course})
+
+def quiz_view(request,pk,required_info):
+    
+    return render(request,'quiz.html')
 
 @login_required(login_url='login')
 def submit_new_quiz_view(request):

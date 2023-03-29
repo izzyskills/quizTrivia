@@ -38,24 +38,21 @@ class Course(models.Model):
         return self.course_name
 
 
-class SessionID(models.Model):
-    """this is to identify questions taken at a particular time."""
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    time_taken = models.DateTimeField(auto_now_add=True)
-
-
 class Question(models.Model):
     """this is for submitted questions"""
-    student = models.ForeignKey(Profile, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    question_no = models.PositiveIntegerField()
     question_text = models.CharField(max_length=200)
     optionA = models.CharField(max_length=200)
     optionB = models.CharField(max_length=200)
     optionC = models.CharField(max_length=200)
     optionD = models.CharField(max_length=200)
-    option_picked = models.PositiveSmallIntegerField(null=True)
     answer = models.PositiveSmallIntegerField()
-    mark = models.PositiveSmallIntegerField(null=True)
-    session_id = models.ForeignKey(SessionID, on_delete=models.CASCADE)
+
+class SessionID(models.Model):
+    """this is to identify questions taken at a particular time."""
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    time_taken = models.DateTimeField(auto_now_add=True)
+    questions = models.ManyToManyField(Question,related_name="questions")
+    mark = models.PositiveIntegerField()
+    no_question = models.PositiveIntegerField()
