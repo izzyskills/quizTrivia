@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %}
+<div>
+  <form method="post">
+    {% csrf_token %}
+    <h4>selcected {{course.course_name}}</h4>
+
+    <label for="num_of_questions">Number of questions </label>
+    <input type="number" name="num_of_questions" id="" /><small
+      >maximum allowed is {{course.num_of_question}}.</small
+    ><br />
+    <label for="timer">Timer</label>
+    <input type="number" name="timer" id="" /><small>min</small><br />
+    <button type="submit">Start</button>
+  </form>
+</div>
+{% endblock content %}

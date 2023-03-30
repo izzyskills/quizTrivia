@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% block content %}
+
+<h4>{{course.course_name}} quiz</h4>
+<p id="timer"></p>
+
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <br />
+  <input type="submit" value="Submit" />
+</form>
+
+<script>
+  var timeLeft = {{ timer }} * 60;
+  var timerElement = document.getElementById("timer");
+
+  var timerId = setInterval(function() {
+    var minutes = Math.floor(timeLeft / 60);
+    var seconds = timeLeft % 60;
+
+    var minutesString = ("0" + minutes).slice(-2);
+    var secondsString = ("0" + seconds).slice(-2);
+
+    timerElement.textContent = minutesString + ":" + secondsString;
+
+    if (timeLeft == 0) {
+      clearInterval(timerId);
+      document.forms[0].submit();
+    }
+
+    timeLeft--;
+  }, 1000);
+</script>
+
+{% endblock content %}

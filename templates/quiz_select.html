@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<form action="{% url 'exam_select' %}" method="get">
+<form action="{% url 'quiz_select' %}" method="get">
   <label>
     <title>Search</title>
     <input name="q" placeholder="search for quizzes" />
@@ -25,12 +25,16 @@
       <td>20</td>
     </tr>
     {% for course in courses %}
-    <tr>
-      <td>{{course.course_code}}</td>
-      {{course.course_title}}
-      <td></td>
-      {{course.num_of_questions}}
-      <td></td>
+    <tr onclick="location.href={% url 'pre_quiz' course.id %}">
+      <td>
+        <a href="{% url 'pre_quiz' course.id %}">{{course.course_code}}</a>
+      </td>
+      <td>
+        <a href="{% url 'pre_quiz' course.id %}">{{course.course_name}}</a>
+      </td>
+      <td>
+        <a href="{% url 'pre_quiz' course.id %}">{{course.num_of_question}}</a>
+      </td>
     </tr>
     {% endfor %}
   </table>
