@@ -9,6 +9,7 @@
   <input type="submit" value="Submit" />
 </form>
 
+{% comment %}
 <script>
   var timeLeft = {{ timer }} * 60;
   var timerElement = document.getElementById("timer");
@@ -30,5 +31,4 @@
     timeLeft--;
   }, 1000);
 </script>
-
-{% endblock content %}
+{% endcomment %} {% endblock content %}

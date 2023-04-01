@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<h4>Previously Taken Quiz</h4>
+<br /><br />
+<table>
+  {% for session in sessions %}
+  <tr>
+    <td>
+      <a href="{% url 'review' session.id %}">{{session.course.course_name}}</a>
+    </td>
+    <td>
+      <a href="{% url 'review' session.id %}"
+        >{{session.timetaken|timesince}} ago
+      </a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}

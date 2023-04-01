@@ -59,5 +59,12 @@ class SessionID(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time_taken = models.DateTimeField(auto_now_add=True)
     questions = models.ManyToManyField(Question, related_name="questions", blank=True)
-    mark = models.PositiveIntegerField(null=True)
+    mark = models.PositiveIntegerField(null=True, blank=True)
     no_question = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ["-time_taken"]
+
+    def __str__(self):
+        return f"{self.course.course_code} {self.profile}"
+

@@ -6,6 +6,11 @@
     <title>quiz trivia</title>
   </head>
   <body>
+    <nav>
+      {% if request.user.is_authenticated %}
+      <p><a href="{% url 'logout' %}">logout</a></p>
+      {% endif %}
+    </nav>
     {% block content %} {% endblock content %}
   </body>
 </html>

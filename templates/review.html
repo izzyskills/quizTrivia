@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+<h4>
+  Answers to {{session.course}} quiz taken {{session.timetaken|timesince}} ago
+</h4>
+{% for question in questions %}
+<h3>{{ question.question_text }}</h3>
+<table>
+  <tr>
+    <td>
+      <input type="radio" name="{{ question.id }}" value="1" 
+      {% if question.answer == 1 %}checked="checked" {% endif %} 
+      disabled /> {{ question.optionA }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="radio" name="{{ question.id }}" value="2" 
+      {% if question.answer == 2 %}checked="checked" {% endif %} 
+      disabled /> {{ question.optionB }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="radio" name="{{ question.id }}" value="3" 
+      {% if question.answer == 3 %} checked="checked" {% endif %}
+       disabled /> {{ question.optionC }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <input type="radio" name="{{ question.id }}" value="4" 
+      {% if question.answer == 4 %}checked="checked" {% endif %} 
+      disabled /> {{ question.optionD }}
+    </td>
+  </tr>
+</table>
+{% endfor %} {% endblock content %}

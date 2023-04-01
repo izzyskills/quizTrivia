@@ -6,12 +6,19 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.urls import reverse
+from urllib.parse import urlencode
 
 # Create your views here.
 
 
 def home_view(request):
     return render(request, "home.html")
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect("home")
 
 
 def login_view(request):
@@ -84,47 +91,47 @@ def pre_quiz_view(request, pk):
             "num_question": num_question,
         }
         session_id.save()
-        return quiz_view(request, pk, session_id, required_info)
+        random_questions = models.Question.objects.filter(course=course).order_by("?")[
+            :num_question
+        ]
+        session_id.questions.set(random_questions)
+        session_id.save()
+        url = reverse("quiz_start", kwargs={"pk": pk, "session_id": session_id.id})
+        query_string = urlencode(required_info)
+        url_with_query = f"{url}?{query_string}"
+        return redirect(url_with_query)
+
     return render(request, "pre_quiz.html", {"course": course})
 
 
-def quiz_view(request, pk, session_id, required_info):
+def quiz_view(request, pk, session_id):
     course = models.Course.objects.get(id=pk)
-
+    session = models.SessionID.objects.get(id=session_id)
     if models.Question.objects.all().filter(course=course).exists():
         pass
     else:
         toQuestion(course.questions, course)
 
-    num_questions = required_info["num_question"]
-    random_questions = models.Question.objects.filter(course=course).order_by("?")[
-        :num_questions
-    ]
-    session_id.questions.set(random_questions)
-    session_id.save()
-    form = forms.QuizForm(session_id=session_id)
+    form = forms.QuizForm(sessions=session)
     if request.method == "POST":
-        form = forms.QuizForm(session_id, request.POST or None)
+        form = forms.QuizForm(session, request.POST)
         if form.is_valid():
             # Check answers and calculate score
-            score = form.check_answers()
-            session_id.mark = score
-            session_id.save()
-            messages.success(
-                request,
-                f"You scored {score} out of {session_id.no_question} questions!",
-            )
-            return redirect("home")
-    return render(
-        request,
-        "quiz.html",
-        {"form": form, "course": course, "timer": required_info["timer"]},
-    )
+            score = form.check_answers(session)
+            session.mark = int(score)
+            session.save()
+            print(form.cleaned_data)
+            return redirect("previous_quiz")
+        else:
+            print("form is invalid")
+            print(form.cleaned_data)
+            print(form.errors)
+    context = {"form": form, "course": course, "timer": int(request.GET.get("timer"))}
+    return render(request, "quiz.html", context)
 
 
 # to turn csv file to question
 def toQuestion(file, course):
-    # csv_file = file.open("r", enconding="utf-8", errors="ignore")
     file2 = open(file.path, "r", encoding="utf-8")
     reader = csv.DictReader(file2)
     for row in reader:
@@ -171,5 +178,20 @@ def submit_new_quiz_view(request):
             course.uploaded_by = models.Profile.objects.get(user=request.user)
             course.save()
             csv_file.close()
+            redirect("dashboard")
 
     return render(request, "submit_new_quiz.html", context)
+
+
+def previous_quiz_view(request):
+    sessions = models.SessionID.objects.filter(
+        profile=models.Profile.objects.get(user=request.user)
+    )[0:10]
+    return render(request, "previous_quiz.html", {"sessions": sessions})
+
+
+def review_quiz_view(request, pk):
+    session = models.SessionID.objects.get(id=pk)
+    questions = session.questions.all()
+    return render(request, "review.html", {"session": session, "questions": questions})
+

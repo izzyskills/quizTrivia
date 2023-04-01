@@ -24,9 +24,9 @@ class CourseCreationForm(forms.ModelForm):
 
 
 class QuizForm(forms.Form):
-    def __init__(self, session_id, *args, **kwargs):
+    def __init__(self, sessions, *args, **kwargs):
         super(QuizForm, self).__init__(*args, **kwargs)
-        questions = session_id.questions.all()
+        questions = sessions.questions.all()
         for question in questions:
             self.fields[str(question.id)] = forms.ChoiceField(
                 label=question.question_text,
@@ -40,11 +40,12 @@ class QuizForm(forms.Form):
                 required=True,
             )
 
-    def check_answers(self, session_id):
-        questions = session_id.questions.all()
+    def check_answers(self, sessions):
+        questions = sessions.questions.all()
+        print(self.cleaned_data)
         correct_count = 0
         for question in questions:
-            answer = self.cleaned_data[str(question.id)]
+            answer = self.cleaned_data.get(str(question.id))
             if answer == str(question.answer):
                 correct_count += 1
         return correct_count
