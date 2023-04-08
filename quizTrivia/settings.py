@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+SESSION_COOKIE_AGE = 21600  # logouts use after 6 hours when inactive
 
 ROOT_URLCONF = "quizTrivia.urls"
 
