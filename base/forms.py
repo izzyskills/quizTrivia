@@ -37,7 +37,7 @@ class QuizForm(forms.Form):
                     (4, question.optionD),
                 ],
                 widget=forms.RadioSelect,
-                required=True,
+                required=False,
             )
 
     def check_answers(self, sessions):
@@ -46,6 +46,6 @@ class QuizForm(forms.Form):
         correct_count = 0
         for question in questions:
             answer = self.cleaned_data.get(str(question.id))
-            if answer == str(question.answer):
+            if answer and answer == str(question.answer):
                 correct_count += 1
         return correct_count

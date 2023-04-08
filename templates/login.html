@@ -1,18 +1,17 @@
 {% extends 'base.html' %} {% block content %}
-<div>
+<div class="center__div">
   <form method="POST" action="">
     {% csrf_token %}
 
     <label>Username:</label>
     <input type="text" name="username" placeholder="Enter Username" />
-
+    <br />
     <label>Password:</label>
     <input type="password" name="password" placeholder="Enter Password" />
-
-    <input type="submit" value="Login" />
+    <br />
+    <button type="submit">Login</button>
   </form>
 
-  <p>havent signed up yet?</p>
-  <a href="{% url 'register' %}">Sign up</a>
+  <p>havent signed up yet? <a href="{% url 'register' %}">Sign up</a></p>
 </div>
 {% endblock content %}

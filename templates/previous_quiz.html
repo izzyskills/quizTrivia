@@ -2,14 +2,20 @@
 <h4>Previously Taken Quiz</h4>
 <br /><br />
 <table>
+  <tr>
+    <th>Course</th>
+    <th>Score</th>
+    <th>Time Taken</th>
+  </tr>
   {% for session in sessions %}
   <tr>
     <td>
       <a href="{% url 'review' session.id %}">{{session.course.course_name}}</a>
     </td>
+    <td><a href="{% url 'review' session.id %}">{{session.mark}}</a></td>
     <td>
       <a href="{% url 'review' session.id %}"
-        >{{session.timetaken|timesince}} ago
+        >{{session.time_taken|timesince}} ago
       </a>
     </td>
   </tr>

@@ -1,16 +1,16 @@
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}" />
     <title>quiz trivia</title>
   </head>
   <body>
-    <nav>
-      {% if request.user.is_authenticated %}
-      <p><a href="{% url 'logout' %}">logout</a></p>
-      {% endif %}
-    </nav>
-    {% block content %} {% endblock content %}
+    {% include 'navbar.html' %}
+    <div class="container">
+      <div class="body">{% block content %} {% endblock content %}</div>
+    </div>
   </body>
 </html>

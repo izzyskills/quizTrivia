@@ -9,3 +9,4 @@ db.sqlite3-journal
 profile_pic/
 questions/
 migrations/
+static/images/profile_pic

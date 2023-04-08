@@ -6,10 +6,9 @@
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <br />
-  <input type="submit" value="Submit" />
+  <button type="submit">Submit</button>
 </form>
 
-{% comment %}
 <script>
   var timeLeft = {{ timer }} * 60;
   var timerElement = document.getElementById("timer");
@@ -31,4 +30,4 @@
     timeLeft--;
   }, 1000);
 </script>
-{% endcomment %} {% endblock content %}
+{% endblock content %}

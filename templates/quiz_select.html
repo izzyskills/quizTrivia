@@ -1,9 +1,26 @@
-{% extends 'base.html' %} {% block content %}
-
+{% extends 'base.html' %} {% block content %} {% comment %}
 <form action="{% url 'quiz_select' %}" method="get">
   <label>
     <title>Search</title>
     <input name="q" placeholder="search for quizzes" />
+  </label>
+</form>
+{% endcomment %}
+<form class="header__search" method="GET" action="{% url 'quiz_select' %}">
+  <label>
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <title>search</title>
+      <path
+        d="M32 30.586l-10.845-10.845c1.771-2.092 2.845-4.791 2.845-7.741 0-6.617-5.383-12-12-12s-12 5.383-12 12c0 6.617 5.383 12 12 12 2.949 0 5.649-1.074 7.741-2.845l10.845 10.845 1.414-1.414zM12 22c-5.514 0-10-4.486-10-10s4.486-10 10-10c5.514 0 10 4.486 10 10s-4.486 10-10 10z"
+      ></path>
+    </svg>
+    <input name="q" placeholder="Search for Quizzes" />
   </label>
 </form>
 <div>
@@ -13,16 +30,6 @@
       <th>Course Code</th>
       <th>Course Title</th>
       <th>Total NO of Questions</th>
-    </tr>
-    <tr>
-      <td>seng 102</td>
-      <td>Intro to web dev</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <td>seng 204</td>
-      <td>software security essentials</td>
-      <td>20</td>
     </tr>
     {% for course in courses %}
     <tr onclick="location.href={% url 'pre_quiz' course.id %}">

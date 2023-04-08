@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <div>
-  <form method="POST" action="">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %} {{userForm.as_p}}
     <br />
     {{profileForm.as_p}}

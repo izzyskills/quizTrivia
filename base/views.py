@@ -39,6 +39,7 @@ def login_view(request):
 
 
 def register_view(request):
+    logout(request)
     userForm = forms.UserCreationForm()
     profileForm = forms.ProfileCreationForm()
     context = {"userForm": userForm, "profileForm": profileForm}
@@ -59,7 +60,10 @@ def register_view(request):
 @login_required(login_url="login")
 def dashboard_view(request):
     user = User.objects.get(id=request.user.id)
-    context = {"user": user}
+    profile = models.Profile.objects.get(user=user)
+    sessions = models.SessionID.objects.filter(profile=profile)
+    courses = models.Course.objects.filter(sessionid__in=sessions).distinct()
+    context = {"user": user, "sessions": sessions[:5], "courses": courses}
 
     return render(request, "dashboard.html", context)
 
@@ -120,12 +124,7 @@ def quiz_view(request, pk, session_id):
             score = form.check_answers(session)
             session.mark = int(score)
             session.save()
-            print(form.cleaned_data)
             return redirect("previous_quiz")
-        else:
-            print("form is invalid")
-            print(form.cleaned_data)
-            print(form.errors)
     context = {"form": form, "course": course, "timer": int(request.GET.get("timer"))}
     return render(request, "quiz.html", context)
 
