@@ -45,3 +45,12 @@ This project was developed by [Israel Omola](https://github.com/izzyskills).
 ## Contact
 
 For any inquiries or feedback, please contact [izzskills@gmail.com](mailto:izzyskills@gmail.com).
+
+## BUGS
+
+-Wrong password leads you to registration page
+-it doesn't tell you if a username is taken and just redirects yoy to login
+-the forms registration and login could use some styling
+-in the case of a blank pfp there should be a default when creating an account
+
+-

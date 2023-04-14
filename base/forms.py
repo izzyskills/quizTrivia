@@ -13,7 +13,12 @@ class UserCreationForm(UserCreationForm):
 class ProfileCreationForm(forms.ModelForm):
     class Meta:
         model = models.Profile
-        fields = ["address", "mobile", "profile_pic"]
+        fields = ["profile_pic"]
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class CourseCreationForm(forms.ModelForm):

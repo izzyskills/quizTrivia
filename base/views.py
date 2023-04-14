@@ -25,17 +25,17 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
     if request.method == "POST":
-        username = request.POST.get("username").lower()
-        password = request.POST.get("password")
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            # Perform authentication and login logic here
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("dashboard")
 
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("dashboard")
-        else:
-            return redirect("register")
-
-    return render(request, "login.html")
+    return render(request, "login.html", {"form": forms.LoginForm})
 
 
 def register_view(request):
@@ -49,11 +49,11 @@ def register_view(request):
         if userForm.is_valid() and profileForm.is_valid():
             user = userForm.save(commit=False)
             user.username = user.username.lower()
-            user.save()
             profile = profileForm.save(commit=False)
             profile.user = user
+            user.save()
             profile.save()
-        return redirect("login")
+            return redirect("login")
     return render(request, "register.html", context)
 
 
@@ -177,7 +177,7 @@ def submit_new_quiz_view(request):
             course.uploaded_by = models.Profile.objects.get(user=request.user)
             course.save()
             csv_file.close()
-            redirect("dashboard")
+            return redirect("quiz_select")
 
     return render(request, "submit_new_quiz.html", context)
 

@@ -1,14 +1,12 @@
 {% extends 'base.html' %} {% block content %}
-<div class="center__div">
-  <form method="POST" action="">
-    {% csrf_token %}
-
-    <label>Username:</label>
-    <input type="text" name="username" placeholder="Enter Username" />
-    <br />
-    <label>Password:</label>
-    <input type="password" name="password" placeholder="Enter Password" />
-    <br />
+<div class="align__div">
+  <form method="POST" action="" class="form">
+    {% csrf_token %} {% for field in form %}
+    <div class="form__group">
+      <label for="">{{field.label}}</label>
+      {{field}}
+    </div>
+    {% endfor %}
     <button type="submit">Login</button>
   </form>
 

@@ -136,3 +136,29 @@ td > a {
   outline: none;
   color: var(--color-light);
 }
+.form__group {
+  margin: 1rem;
+}
+
+.form__group label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.form__group input,
+.form__group textarea,
+.form__group select {
+  border: 1px solid var(--color-links);
+  padding: 0.3rem;
+  border-radius: 3px;
+  outline: none;
+}
+.align__div {
+  background-color: #9ce3b4;
+  width: 70%;
+  padding: 2px;
+  margin: 0 auto;
+  border: 3px;
+  border-radius: 10px;
+}

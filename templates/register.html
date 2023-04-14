@@ -1,11 +1,20 @@
 {% extends 'base.html' %} {% block content %}
-<div>
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %} {{userForm.as_p}}
-    <br />
-    {{profileForm.as_p}}
-    <input type="submit" value="Register" />
+<div class="align__div">
+  <form method="POST" enctype="multipart/form-data" class="form">
+    {% csrf_token %} {% for field in userForm %}
+    <div class="form__group">
+      <label for="">{{field.label}}</label>
+      {{field}}
+    </div>
+    {% endfor %} {% for field in profileForm %}
+    <div class="form__group">
+      <label for="">{{field.label}}</label>
+      {{field}}
+    </div>
+    {% endfor %}
+    <button type="submit">Register</button>
   </form>
+  <br />
   <p>Already signed up yet?</p>
   <a href="{% url 'login' %}">Login</a>
 </div>
